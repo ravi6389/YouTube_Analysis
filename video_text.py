@@ -1,17 +1,10 @@
 import streamlit as st
 from youtube_transcript_api import YouTubeTranscriptApi, NoTranscriptFound, TranscriptsDisabled
-from langchain.chat_models import ChatOpenAI
-from langchain.agents import initialize_agent, Tool, AgentType
-import os
-from langchain.agents import Tool
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain_groq import ChatGroq
 
-
-os.environ['SSL_CERT_FILE'] = 'C:\\Users\\RSPRASAD\\AppData\\Local\\.certifi\\cacert.pem'
-os.environ['REQUESTS_CA_BUNDLE'] = 'C:\\Users\\RSPRASAD\\AppData\\Local\\.certifi\\cacert.pem'
-GROQ_API_KEY = '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'
+GROQ_API_KEY = st.secrets['GROQ_API_KEY']
 llm = ChatGroq(temperature=0.8, groq_api_key=GROQ_API_KEY, model_name="llama3-70b-8192", streaming = True)
 
 os.environ['CURL_CA_BUNDLE'] = ''
