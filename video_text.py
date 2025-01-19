@@ -4,6 +4,9 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain_groq import ChatGroq
 
+if 'transcript' not in st.session_state:
+    st.session_state['transcript'] = ''
+
 GROQ_API_KEY = st.secrets['GROQ_API_KEY']
 llm = ChatGroq(temperature=0.8, groq_api_key=GROQ_API_KEY, model_name="llama3-70b-8192", streaming = True)
 
@@ -64,10 +67,10 @@ if not video_url:
     st.stop()
 
 # Fetch Transcript
-transcript = (get_transcript(video_url))
-st.write(transcript)
-if isinstance(transcript, str):  # Error or no transcript found
-    st.error(transcript)
+if len(st.session_state['transcript'])<2:
+    st.session_state['transcript'] = get_transcript(video_url)
+if isinstance(st.session_state['transcript'], str):  # Error or no transcript found
+    st.error(st.session_state['transcript'])
 else:
     # Select Action
     action = st.radio(
@@ -77,18 +80,18 @@ else:
 
     # Fetch Transcript
     if action == "Fetch Transcript":
-        st.text_area("Transcript", value=" ".join([entry["text"] for entry in transcript]), height=300)
+        st.text_area("Transcript", value=st.session_state['transcript'])
 
     # Find Timestamps for Word
     elif action == "Find Timestamps for a Word":
         search_word = st.text_input("Enter the word to search for:")
         if search_word and st.button("Find Timestamps"):
-            timestamps = find_word_timestamps(transcript, search_word)
+            timestamps = find_word_timestamps(st.session_state['transcript'], search_word)
             st.write(timestamps)
 
     # Summarize the Video
     elif action == "Summarize the Video":
         if st.button("Summarize"):
-            summary = summarize_transcript(transcript)
+            summary = summarize_transcript(st.session_state['transcript'])
             st.write("### Summary:")
             st.write(summary)
