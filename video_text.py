@@ -7,8 +7,6 @@ from langchain_groq import ChatGroq
 GROQ_API_KEY = st.secrets['GROQ_API_KEY']
 llm = ChatGroq(temperature=0.8, groq_api_key=GROQ_API_KEY, model_name="llama3-70b-8192", streaming = True)
 
-os.environ['CURL_CA_BUNDLE'] = ''
-
 
 def get_transcript(video_url):
     """Fetch the transcript of a YouTube video."""
