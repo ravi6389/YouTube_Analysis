@@ -64,8 +64,8 @@ if not video_url:
     st.stop()
 
 # Fetch Transcript
-transcript = get_transcript(video_url)
-st.write(transcript)
+transcript = str(get_transcript(video_url))
+# st.write(transcript)
 if isinstance(transcript, str):  # Error or no transcript found
     st.error(transcript)
 else:
