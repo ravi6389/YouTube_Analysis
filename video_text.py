@@ -40,7 +40,7 @@ def summarize_transcript(transcript):
     # st.write(transcript)
     """Summarize the YouTube transcript using ChatGroq LLM."""
     text = " ".join([entry["text"] for entry in transcript])
-    text = text[:5000]
+    text = text[:2500]
     prompt = f"Based on the following {text},  summarize {text}"
     template = PromptTemplate(
                 input_variables=["text"],
