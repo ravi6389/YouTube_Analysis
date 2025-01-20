@@ -15,7 +15,7 @@ def get_transcript(video_url):
     """Fetch the transcript of a YouTube video."""
     try:
         video_id = video_url.split("v=")[-1].split("&")[0]
-        st.write('video id is..", video_id)
+        st.write('video id is..', video_id)
         transcript = YouTubeTranscriptApi.get_transcript(video_id)
         st.write(transcript)
         return transcript
