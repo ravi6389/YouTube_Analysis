@@ -68,6 +68,7 @@ if not video_url:
     st.stop()
 
 # Fetch Transcript
+st.write(st.session_state['transcript'])
 if len(st.session_state['transcript'])<2:
     st.session_state['transcript'] = get_transcript(video_url)
 if isinstance(st.session_state['transcript'], str):  # Error or no transcript found
